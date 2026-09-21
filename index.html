@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Nova Studio</title>
+    <style>
+      :root {
+        --bg: #0b1020;
+        --panel: rgba(18, 25, 45, 0.9);
+        --panel-2: rgba(255, 255, 255, 0.04);
+        --text: #eaf2ff;
+        --muted: #a7b5d6;
+        --primary: #7c9cff;
+        --secondary: #8ef0d1;
+        --accent: #ff9ec9;
+        --shadow: 0 25px 60px rgba(7, 12, 28, 0.45);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        margin: 0;
+        font-family: Arial, Helvetica, sans-serif;
+        background: radial-gradient(circle at top, #1d2d59 0%, var(--bg) 48%);
+        color: var(--text);
+        line-height: 1.6;
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      .container {
+        width: min(1100px, 90%);
+        margin: 0 auto;
+      }
+
+      header {
+        position: sticky;
+        top: 0;
+        backdrop-filter: blur(12px);
+        background: rgba(11, 16, 32, 0.7);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        z-index: 10;
+      }
+
+      nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        min-height: 72px;
+      }
+
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font-weight: 700;
+        letter-spacing: 1px;
+      }
+
+      .brand-mark {
+        width: 34px;
+        height: 34px;
+        display: grid;
+        place-items: center;
+        border-radius: 12px;
+        background: linear-gradient(135deg, var(--primary), var(--secondary));
+        color: #081121;
+        font-weight: 900;
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 28px;
+        color: var(--muted);
+        font-size: 0.95rem;
+      }
+
+      .nav-links a:hover {
+        color: var(--text);
+      }
+
+      .btn {
+        display: inline-block;
+        border: none;
+        border-radius: 999px;
+        padding: 0.9rem 1.5rem;
+        font-weight: 700;
+        cursor: pointer;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+      }
+
+      .btn:hover {
+        transform: translateY(-2px);
+      }
+
+      .btn-primary {
+        background: linear-gradient(135deg, var(--primary), var(--secondary));
+        color: #07131f;
+        box-shadow: 0 18px 35px rgba(124, 156, 255, 0.35);
+      }
+
+      .btn-secondary {
+        background: rgba(255, 255, 255, 0.05);
+        color: var(--text);
+        border: 1px solid rgba(255, 255, 255, 0.12);
+      }
+
+      .hero {
+        padding: 80px 0 60px;
+      }
+
+      .hero-grid {
+        display: grid;
+        grid-template-columns: 1.1fr 0.9fr;
+        gap: 40px;
+        align-items: center;
+      }
+
+      .eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 0.45rem 0.9rem;
+        border-radius: 999px;
+        background: rgba(124, 156, 255, 0.12);
+        color: #dfe8ff;
+        border: 1px solid rgba(124, 156, 255, 0.25);
+        font-size: 0.8rem;
+      }
+
+      h1 {
+        font-size: clamp(2.8rem, 6vw, 5rem);
+        line-height: 0.92;
+        margin: 18px 0 16px;
+      }
+
+      .highlight {
+        background: linear-gradient(135deg, var(--secondary), var(--primary), var(--accent));
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+      }
+
+      .lead {
+        font-size: 1.08rem;
+        color: var(--muted);
+        max-width: 560px;
+      }
+
+      .hero-actions {
+        display: flex;
+        gap: 15px;
+        margin-top: 28px;
+        flex-wrap: wrap;
+      }
+
+      .stats {
+        display: flex;
+        gap: 24px;
+        margin-top: 30px;
+        flex-wrap: wrap;
+      }
+
+      .stat {
+        min-width: 120px;
+      }
+
+      .stat strong {
+        display: block;
+        font-size: 1.8rem;
+      }
+
+      .stat span {
+        color: var(--muted);
+        font-size: 0.9rem;
+      }
+
+      .hero-visual {
+        position: relative;
+        min-height: 500px;
+      }
+
+      .glass-card {
+        position: absolute;
+        background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02));
+        border: 1px solid rgba(255,255,255,0.1);
+        border-radius: 28px;
+        box-shadow: var(--shadow);
+        backdrop-filter: blur(12px);
+      }
+
+      .main-card {
+        inset: 30px 35px 60px 35px;
+        padding: 24px;
+      }
+
+      .mini-card {
+        width: 180px;
+        right: 0;
+        bottom: 25px;
+        padding: 18px;
+      }
+
+      .mini-card small,
+      .main-card small {
+        color: var(--muted);
+      }
+
+      .chart-box {
+        height: 220px;
+        margin-top: 18px;
+        border-radius: 18px;
+        background:
+          linear-gradient(180deg, rgba(124,156,255,0.25), rgba(124,156,255,0.05)),
+          linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px),
+          linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px);
+        background-size: auto, 30px 30px, 30px 30px;
+        overflow: hidden;
+        position: relative;
+      }
+
+      .chart-box::before {
+        content: "";
+        position: absolute;
+        inset: 18% 10% 12% 10%;
+        background: linear-gradient(135deg, var(--primary), var(--secondary), var(--accent));
+        clip-path: polygon(0% 60%, 18% 52%, 30% 44%, 45% 65%, 63% 32%, 78% 40%, 100% 10%, 100% 100%, 0% 100%);
+        border-radius: 18px;
+      }
+
+      .bars {
+        display: flex;
+        align-items: end;
+        gap: 12px;
+        height: 110px;
+        margin-top: 18px;
+      }
+
+      .bars span {
+        display: block;
+        width: 16%;
+        background: linear-gradient(180deg, var(--secondary), var(--primary));
+        border-radius: 12px 12px 0 0;
+      }
+
+      .bars span:nth-child(1) { height: 32%; }
+      .bars span:nth-child(2) { height: 52%; }
+      .bars span:nth-child(3) { height: 44%; }
+      .bars span:nth-child(4) { height: 75%; }
+      .bars span:nth-child(5) { height: 90%; }
+
+      .section {
+        padding: 40px 0 80px;
+      }
+
+      .section-title {
+        text-align: center;
+        margin-bottom: 32px;
+      }
+
+      .section-title h2 {
+        font-size: clamp(2rem, 3vw, 3rem);
+        margin-bottom: 8px;
+      }
+
+      .section-title p {
+        color: var(--muted);
+        margin: 0;
+      }
+
+      .feature-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 22px;
+      }
+
+      .feature-card {
+        background: var(--panel-2);
+        border: 1px solid rgba(255,255,255,0.08);
+        border-radius: 22px;
+        padding: 25px 22px;
+      }
+
+      .feature-icon {
+        width: 54px;
+        height: 54px;
+        border-radius: 16px;
+        display: grid;
+        place-items: center;
+        background: linear-gradient(135deg, rgba(124,156,255,0.2), rgba(142,240,209,0.2));
+        margin-bottom: 18px;
+        font-size: 1.5rem;
+      }
+
+      .feature-card h3 {
+        margin: 0 0 10px;
+      }
+
+      .feature-card p {
+        margin: 0;
+        color: var(--muted);
+      }
+
+      .cta {
+        text-align: center;
+        padding: 30px 0 80px;
+      }
+
+      .cta-box {
+        background: linear-gradient(135deg, rgba(124,156,255,0.12), rgba(255,158,201,0.14));
+        border: 1px solid rgba(255,255,255,0.1);
+        border-radius: 28px;
+        padding: 46px 24px;
+      }
+
+      footer {
+        padding: 20px 0 50px;
+        color: var(--muted);
+        text-align: center;
+      }
+
+      @media (max-width: 860px) {
+        .hero-grid,
+        .feature-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .nav-links {
+          display: none;
+        }
+
+        .hero-visual {
+          min-height: 420px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <nav>
+          <div class="brand">
+            <div class="brand-mark">N</div>
+            <span>Nova Studio</span>
+          </div>
+          <div class="nav-links">
+            <a href="#about">About</a>
+            <a href="#features">Features</a>
+            <a href="#work">Work</a>
+            <a href="#contact">Contact</a>
+          </div>
+          <a href="#contact" class="btn btn-primary">Book a Call</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="container hero-grid">
+          <div>
+            <span class="eyebrow">✨ Creative digital experiences</span>
+            <h1>
+              Build <span class="highlight">bold ideas</span>
+              that move people.
+            </h1>
+            <p class="lead">
+              We design striking brands, immersive web experiences, and growth-focused digital systems for teams ready to stand out.
+            </p>
+            <div class="hero-actions">
+              <a href="#features" class="btn btn-primary">Explore Services</a>
+              <a href="#work" class="btn btn-secondary">View Projects</a>
+            </div>
+            <div class="stats">
+              <div class="stat">
+                <strong>120+</strong>
+                <span>Projects</span>
+              </div>
+              <div class="stat">
+                <strong>8.4x</strong>
+                <span>Avg. Growth</span>
+              </div>
+              <div class="stat">
+                <strong>4.9/5</strong>
+                <span>Client Rating</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="hero-visual" aria-label="Dashboard preview">
+            <div class="glass-card main-card">
+              <small>Performance Overview</small>
+              <div class="bars" aria-hidden="true">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+              <div class="chart-box"></div>
+            </div>
+            <div class="glass-card mini-card">
+              <small>Campaign Lift</small>
+              <h3 style="margin: 10px 0 0; font-size: 2rem;">+64%</h3>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="features" class="section">
+        <div class="container">
+          <div class="section-title">
+            <h2>Why brands choose us</h2>
+            <p>Strategy, design, and digital execution built around real results.</p>
+          </div>
+
+          <div class="feature-grid">
+            <article class="feature-card">
+              <div class="feature-icon">✦</div>
+              <h3>Brand Strategy</h3>
+              <p>Clear positioning and messaging that turn attention into trust.</p>
+            </article>
+            <article class="feature-card">
+              <div class="feature-icon">◎</div>
+              <h3>UI / UX Design</h3>
+              <p>Thoughtful user journeys that reduce friction and increase engagement.</p>
+            </article>
+            <article class="feature-card">
+              <div class="feature-icon">▣</div>
+              <h3>Growth Systems</h3>
+              <p>Automation and digital funnels that help your business scale sustainably.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="cta" id="contact">
+        <div class="container">
+          <div class="cta-box">
+            <h2 style="margin-top: 0; font-size: clamp(2rem, 4vw, 3rem);">Ready to build something unforgettable?</h2>
+            <p style="color: var(--muted); margin: 0 0 24px;">
+              Let’s turn your vision into a digital experience that feels premium and performs.
+            </p>
+            <a href="mailto:hello@novastudio.example" class="btn btn-primary">hello@novastudio.example</a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="container">© 2026 Nova Studio. Crafted for bold brands.</div>
+    </footer>
+  </body>
+</html>
